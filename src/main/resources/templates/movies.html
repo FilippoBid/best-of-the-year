@@ -16,7 +16,7 @@
             <ul>
 
                 <li th:each="movie : ${movies}">
-                    <a th:href="@{|/info/${movie.id}|}" th:text="${movie.title}"></a>
+                    <a th:href="@{|/info/${movie.id}/true|}" th:text="${movie.title}"></a>
                 </li>
             </ul>
 

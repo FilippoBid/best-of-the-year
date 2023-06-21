@@ -49,18 +49,18 @@ public class MainController {
         return "movies";
     }
 
-    @GetMapping("info/{id}")
-    public String infoMovie(@PathVariable Integer id, Model model) {
+    @GetMapping("info/{id}/{isMovie}")
+    public String info(@PathVariable Integer id, @PathVariable boolean isMovie, Model model) {
         Object currentMedia = null;
 
-        for (Movie movie : getBestMovies()) {
-            if (movie.getId() == id) {
-                currentMedia = movie;
-                break;
+        if (isMovie) {
+            for (Movie movie : getBestMovies()) {
+                if (movie.getId() == id) {
+                    currentMedia = movie;
+                    break;
+                }
             }
-        }
-
-        if (currentMedia == null) {
+        } else {
             for (Song song : getBestSongs()) {
                 if (song.getId() == id) {
                     currentMedia = song;
@@ -70,15 +70,10 @@ public class MainController {
         }
 
 
-        if (currentMedia instanceof Movie) {
-            model.addAttribute("movie", currentMedia);
+        model.addAttribute("object", currentMedia);
+
             return "info";
-        } else if (currentMedia instanceof Song) {
-            model.addAttribute("song", currentMedia);
-            return "info";
-        } else {
-            return "mediaNotFound";
-        }
+
     }
 
     @GetMapping("/songs")

@@ -7,10 +7,9 @@
 <body class="container">
 
 
-    <div th:object="${movie}">
-      <h5 th:text="*{id}|"></h5>
-      <h1 th:text="*{title}|"></h1>
-    </div>
+
+    <h5 th:text="${object.id}"></h5>
+    <h1 th:text="${object.title}"></h1>
 
 </body>
 </html>
