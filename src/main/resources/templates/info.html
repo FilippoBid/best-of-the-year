@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <th:block th:replace="fragments :: head"></th:block>
+  <title>movie</title>
+</head>
+<body class="container">
+
+
+    <div th:object="${movie}">
+      <h5 th:text="*{id}|"></h5>
+      <h1 th:text="*{title}|"></h1>
+    </div>
+
+</body>
+</html>

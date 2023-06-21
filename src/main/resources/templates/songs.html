@@ -5,9 +5,23 @@
     <title>Movies</title>
 </head>
 <body>
+<div class="container">
 
-<h2> Best songs: </h2>
-<p th:text="${titles}"></p>
+    <h2 class="text-danger" > Best Songs: </h2>
 
+
+
+    <div class="list-group">
+
+        <ul>
+
+            <li th:each="song : ${songs}">
+                <a th:href="@{|/info/${song.id}|}" th:text="${song.title}"></a>
+            </li>
+        </ul>
+
+    </div>
+
+</div>
 </body>
 </html>

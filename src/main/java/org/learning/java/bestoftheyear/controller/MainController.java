@@ -5,6 +5,7 @@ import org.learning.java.bestoftheyear.Song;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
@@ -44,30 +45,46 @@ public class MainController {
     @GetMapping("/movies")
     public String getMovies(Model model){
         List<Movie> moviesList = getBestMovies();
-        List<String> movieTitles = new ArrayList<>();
-        for (Movie movie : moviesList) {
-            if(moviesList.indexOf(movie)==moviesList.size()-1){
-                movieTitles.add(movie.getTitle()+".");
-            }else {
-                movieTitles.add(movie.getTitle());
+        model.addAttribute("movies",  moviesList);
+        return "movies";
+    }
+
+    @GetMapping("info/{id}")
+    public String infoMovie(@PathVariable Integer id, Model model) {
+        Object currentMedia = null;
+
+        for (Movie movie : getBestMovies()) {
+            if (movie.getId() == id) {
+                currentMedia = movie;
+                break;
             }
         }
-        model.addAttribute("titles",  movieTitles);
-        return "movies";
+
+        if (currentMedia == null) {
+            for (Song song : getBestSongs()) {
+                if (song.getId() == id) {
+                    currentMedia = song;
+                    break;
+                }
+            }
+        }
+
+
+        if (currentMedia instanceof Movie) {
+            model.addAttribute("movie", currentMedia);
+            return "info";
+        } else if (currentMedia instanceof Song) {
+            model.addAttribute("song", currentMedia);
+            return "info";
+        } else {
+            return "mediaNotFound";
+        }
     }
 
     @GetMapping("/songs")
     public String getSongs(Model model){
         List<Song> songsList = getBestSongs();
-        List<String> songTitles = new ArrayList<>();
-        for (Song song : songsList) {
-            if(songsList.indexOf(song)==songsList.size()-1){
-                songTitles.add(song.getTitle()+".");
-            }else {
-                songTitles.add(song.getTitle());
-            }
-        }
-        model.addAttribute("titles",  songTitles);
+        model.addAttribute("songs",  songsList);
         return "songs";
     }
 }

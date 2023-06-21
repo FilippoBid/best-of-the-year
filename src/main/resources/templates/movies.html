@@ -1,13 +1,27 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Movies</title>
+    <th:block th:replace="fragments :: head"></th:block>
+    <title>movie</title>
 </head>
 <body>
+<div class="container">
 
-<h2> Best movies: </h2>
-<p th:text="${titles}"></p>
+         <h2 class="text-danger" > Best movies: </h2>
+<!--    <button th:text="${titles}"></button>-->
 
+
+        <div class="list-group">
+
+            <ul>
+
+                <li th:each="movie : ${movies}">
+                    <a th:href="@{|/info/${movie.id}|}" th:text="${movie.title}"></a>
+                </li>
+            </ul>
+
+        </div>
+
+</div>
 </body>
 </html>
